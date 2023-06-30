@@ -36,11 +36,12 @@ X_train, y_train = np.array(X_train), np.array(y_train)
 X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], n_features))
 
 # Number of times to train the model
-num_iterations = 5  # You can change this value
+num_iterations = 10
 
 # List to store metrics
 rmse_list = []
 mae_list = []
+test_preds = []
 
 # Loop to train the model multiple times
 for i in range(num_iterations):
@@ -66,6 +67,7 @@ for i in range(num_iterations):
     # Make predictions on the test set
     test_pred = model.predict(X_test)
     test_pred = scaler.inverse_transform(test_pred)
+    test_preds.append(test_pred)
 
     # Evaluate the model on the test set and store metrics
     rmse = np.sqrt(np.mean((test_pred - test.values)**2))
@@ -73,7 +75,7 @@ for i in range(num_iterations):
     mae = mean_absolute_error(test.values[n_steps:], test_pred)
     mae_list.append(mae)
 
-    # You can print metrics for each iteration if you want
+    # print metrics for each iteration if you want
     print(f"Iteration {i + 1} - RMSE: {rmse}, MAE: {mae}")
 
 # Calculate the mean metrics
@@ -82,3 +84,11 @@ mean_mae = np.mean(mae_list)
 
 print("Mean RMSE:", mean_rmse)
 print("Mean MAE:", mean_mae)
+
+# Plot the actual vs predicted values for the train and test sets
+plt.figure(figsize=(10, 6))
+plt.plot(train.index[n_steps:], train.values[n_steps:], label="Actual Train")
+plt.plot(test.index[n_steps:], test.values[n_steps:], label="Actual Test")
+plt.plot(test.index[n_steps:], np.mean(test_preds, axis=0), label="Predicted Test")
+plt.legend()
+plt.show()
