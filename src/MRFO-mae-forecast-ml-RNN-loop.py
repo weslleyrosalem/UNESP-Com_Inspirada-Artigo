@@ -118,7 +118,7 @@ def train_and_evaluate_model(n_units, n_epochs, X_train, y_train, X_test, y_test
     model.add(Reshape((n_steps, n_features), input_shape=(n_steps,)))
     model.add(LSTM(n_units, activation='relu'))
     model.add(Dense(1))
-    model.compile(optimizer='adam', loss='mse')
+    model.compile(optimizer='adam', loss='mae')
 
     # Train the model
     model.fit(X_train, y_train, epochs=n_epochs, verbose=0)
