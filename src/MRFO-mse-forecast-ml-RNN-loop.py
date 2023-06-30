@@ -168,7 +168,7 @@ mean_mae = np.mean(mae_list)
 print("Média de execuções RMSE over {} runs: {}".format(num_runs, mean_rmse))
 print("Mean MAE over {} runs: {}".format(num_runs, mean_mae))
 
-# Optionally, you can also plot the metrics for each run
+# Plot the metrics for each run
 plt.figure(figsize=(10, 6))
 plt.plot(rmse_list, label="RMSE")
 plt.plot(mae_list, label="MAE")
